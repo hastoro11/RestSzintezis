@@ -1,0 +1,29 @@
+<div class="col-sm-6 col-sm-offset-2">
+    <h2>Tevékenységek a {{date}} napon</h2>
+    <h4 ng-if="nodata">Nincs a napra tevékenység rögzítve</h4>
+    <uib-tabset justified="true" ng-hide="nodata">
+        <uib-tab heading="Idő szerint">
+            <table class="table table-condensed table-striped">
+                <tr>
+                    <th>Megnevezés</th>
+                    <th>Kategória</th>
+                    <th>Kezdés</th>
+                    <th>Befejezés</th>
+                    <th>Időtartam</th>
+                </tr>
+                <tr ng-repeat="act in activities | orderBy:act.startTime">
+                    <td>{{act.name}}</td>
+                    <td>{{act.subCatId}}</td>
+                    <td>{{act.startTime}}</td>
+                    <td>{{act.endTime}}</td>
+                    <td>{{act.duration}} perc</td>
+                </tr>
+            </table>
+        </uib-tab>
+        <uib-tab heading="Kategóriák szerint">Short Labeled Justified content</uib-tab>
+        <uib-tab heading="Alkategóriák szerint">Long Labeled Justified content</uib-tab>
+    </uib-tabset>
+    <p ng-hide="nodata">Összes feljegyzett idő: {{totaltime}} perc ({{(totaltime / 60) -0.5 | number:0}} óra {{totaltime
+        %
+        60}} perc)</p>
+</div>

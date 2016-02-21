@@ -1,0 +1,22 @@
+<form class="col-sm-offset-2 col-sm-6">
+    <fieldset>
+        <legend>Alkategória</legend>
+        <span ng-init="items=['one','two','three']"></span>
+
+        <div class="form-group">
+            <label>Kategória</label>
+            <select class="form-control" ng-options="cat.id as cat.name for cat in categories"
+                    ng-model="subcategory.catId">
+                <option value=""> -- Válassz --</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Megnevezés</label>
+            <input type="text" class="form-control" ng-model="subcategory.name">
+        </div>
+        <button class="btn btn-default" ng-click="cancel()">Mégsem</button>
+        <button class="btn btn-primary" ng-click="submit()">Mentés</button>
+        <button class="btn btn-danger" ng-click="delete(subcategory.id)" ng-show="edit">Töröl</button>
+
+    </fieldset>
+</form>

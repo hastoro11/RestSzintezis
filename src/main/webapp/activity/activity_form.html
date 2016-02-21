@@ -1,0 +1,45 @@
+<div class="col-sm-12">
+    <h2 class="col-sm-offset-2">Új tevékenység</h2>
+
+    <form>
+        <fieldset>
+            <div class="col-sm-6 col-sm-offset-2">
+                <div class="form-group">
+                    <label>Válassz egy dátumot</label>
+
+                    <p class="input-group">
+                        <input type="text" class="form-control" ng-model="activity.date" is-open="popup.opened"
+                               uib-datepicker-popup ng-required="true"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label>Megnevezés</label>
+                    <input type="text" class="form-control" ng-model="activity.name">
+                </div>
+                <div class="form-group">
+                    <label>Alkategóriák</label>
+                    <select class="form-control" ng-options="subcat.id as subcat.name for subcat in subcategories"
+                            ng-model="activity.subCatId">
+                        <option value="0"> -- Válassz --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Kezdési idő</label>
+                    <uib-timepicker ng-model="activity.startTime" show-meridian="false"></uib-timepicker>
+                </div>
+                <div class="form-group">
+                    <label>Befejezési idő</label>
+                    <uib-timepicker ng-model="activity.endTime" show-meridian="false"></uib-timepicker>
+                </div>
+                <button class="btn btn-default" ng-click="cancel()">Mégsem</button>
+                <button class="btn btn-primary" ng-click="submit()">Mentés</button>
+            </div>
+
+        </fieldset>
+    </form>
+</div>

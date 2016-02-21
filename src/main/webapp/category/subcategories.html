@@ -1,0 +1,19 @@
+<div class="col-sm-6 col-sm-offset-2">
+    <h2>Alkategóriák</h2>
+    <button class="btn btn-primary" ng-click="addNew()">Új alkategória</button>
+    <br/><br/>
+    <table class="table table-condensed">
+        <tr>
+            <th>Id</th>
+            <th>Megnevezés</th>
+            <th>Kategória</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="subcat in subcategories">
+            <td>{{subcat.id}}</td>
+            <td>{{subcat.name}}</td>
+            <td>{{subcat.catName}}</td>
+            <td><a href="#/subcategory/{{subcat.id}}">Szerkeszt</a></td>
+        </tr>
+    </table>
+</div>

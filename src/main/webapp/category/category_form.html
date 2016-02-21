@@ -1,0 +1,12 @@
+<form class="col-sm-offset-2 col-sm-6">
+    <fieldset>
+        <legend>Kategória</legend>
+        <div class="form-group">
+            <label>Megnevezés</label>
+            <input type="text" class="form-control" ng-model="category.name">
+        </div>
+        <button class="btn btn-default" ng-click="cancel()">Mégsem</button>
+        <button class="btn btn-primary" ng-click="submit()">Mentés</button>
+        <button class="btn btn-danger" ng-click="delete(category.id)" ng-show="edit">Töröl</button>
+    </fieldset>
+</form>
