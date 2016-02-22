@@ -1,14 +1,16 @@
-<div class="col-sm-12">
-    <h2 class="col-sm-offset-2">Új tevékenység</h2>
+<div class="col-sm-6 col-sm-offset-">
+    <h2>Új tevékenység</h2>
 
-    <form>
+    <form name="activityForm">
         <fieldset>
             <div class="col-sm-6 col-sm-offset-2">
-                <div class="form-group">
+                <div class="form-group form-group-sm"
+                     ng-class="{'has-error':activityForm.date.$invalid && activityForm.date.$touched}">
                     <label>Válassz egy dátumot</label>
 
                     <p class="input-group">
                         <input type="text" class="form-control" ng-model="activity.date" is-open="popup.opened"
+                               name="date"
                                uib-datepicker-popup ng-required="true"/>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="open()">
@@ -16,28 +18,39 @@
                             </button>
                         </span>
                     </p>
+                    <span class="help-block" ng-if="activityForm.date.$invalid && activityForm.date.$touched">Válasszon egy dátumot</span>
                 </div>
-                <div class="form-group">
+                <div class="form-group"
+                     ng-class="{'has-error':activityForm.name.$invalid && activityForm.name.$touched}">
                     <label>Megnevezés</label>
-                    <input type="text" class="form-control" ng-model="activity.name">
+                    <input type="text" class="form-control" ng-model="activity.name" name="name" ng-required="true">
+                    <span class="help-block" ng-if="activityForm.name.$invalid && activityForm.name.$touched">A megnevezés mező nem maradhat üresen</span>
                 </div>
-                <div class="form-group">
+                <div class="form-group"
+                     ng-class="{'has-error':activityForm.subCat.$invalid && activityForm.subCat.$touched}">
                     <label>Alkategóriák</label>
                     <select class="form-control" ng-options="subcat.id as subcat.name for subcat in subcategories"
-                            ng-model="activity.subCatId">
+                            ng-model="activity.subCatId" name="subCat" ng-required="true">
                         <option value="0"> -- Válassz --</option>
                     </select>
+                    <span class="help-block" ng-if="activityForm.subCat.$invalid && activityForm.subCat.$touched">Válasszon egy alkategóriát</span>
                 </div>
-                <div class="form-group">
+                <div class="form-group"
+                     ng-class="{'has-error':activityForm.start.$invalid && activityForm.start.$touched}">
                     <label>Kezdési idő</label>
-                    <uib-timepicker ng-model="activity.startTime" show-meridian="false"></uib-timepicker>
+                    <uib-timepicker ng-model="activity.startTime" show-meridian="false" ng-required="true"
+                                    name="start"></uib-timepicker>
+                    <span class="help-block" ng-if="activityForm.start.$error.required && activityForm.start.$touched">A mezőt ki kell tölteni</span>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error':activityForm.end.$invalid && activityForm.end.$touched}">
                     <label>Befejezési idő</label>
-                    <uib-timepicker ng-model="activity.endTime" show-meridian="false"></uib-timepicker>
+                    <uib-timepicker ng-model="activity.endTime" show-meridian="false" name="end" ng-required="true"
+                                    ng-blur="validate()"></uib-timepicker>
+                    <span class="help-block" ng-if="activityForm.end.$error.required && activityForm.end.$touched">A mezőt ki kell tölteni</span>
+                    <span class="help-block" ng-if="activityForm.end.$error.late && activityForm.end.$touched">Csak a kezdésnél későbbi idő fogadható el</span>
                 </div>
                 <button class="btn btn-default" ng-click="cancel()">Mégsem</button>
-                <button class="btn btn-primary" ng-click="submit()">Mentés</button>
+                <button class="btn btn-primary" ng-click="submit()" ng-disabled="activityForm.$invalid">Mentés</button>
             </div>
 
         </fieldset>

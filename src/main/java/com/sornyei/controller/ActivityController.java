@@ -29,9 +29,11 @@ public class ActivityController {
 
 	@RequestMapping(value = "/activities", method = RequestMethod.POST)
 	public ResponseEntity<Activity> addNewActivity(@RequestBody Activity activity) {
-		logger.info("ActivityController entered...");
-		activityService.create(activity);
-
-		return null;
+		Activity act = activityService.create(activity);
+		if (act == null) {
+			return new ResponseEntity<Activity>(HttpStatus.UNPROCESSABLE_ENTITY);
+		} else {
+			return new ResponseEntity<Activity>(act, HttpStatus.CREATED);
+		}
 	}
 }

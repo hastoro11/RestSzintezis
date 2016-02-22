@@ -3,10 +3,11 @@ package com.sornyei.service;
 import com.sornyei.model.Activity;
 import com.sornyei.repository.ActivityRepository;
 import org.apache.log4j.Logger;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,16 +18,26 @@ import java.util.List;
 public class ActivityService {
 
 	@Autowired
-	private ActivityRepository activityRepository;
+	private ActivityRepository repository;
 
 	static final Logger logger = Logger.getLogger(ActivityService.class.getName().toUpperCase());
 
 	public Activity create(Activity activity) {
-		logger.info(activity);
-		return activityRepository.create(activity);
+		LocalTime startB = new LocalTime(activity.getStartTime());
+		LocalTime endB = new LocalTime(activity.getEndTime());
+		List<Activity> activities = repository.getActivities(activity.getDate());
+		for (Activity act : activities) {
+			LocalTime startA = new LocalTime(act.getStartTime());
+			LocalTime endA = new LocalTime(act.getEndTime());
+			if ((startA.isBefore(endB) || startA.isEqual(endB)) && (endA.isAfter(startB) || endA.isEqual(startB))) {
+				//overlap
+				return null;
+			}
+		}
+		return repository.create(activity);
 	}
 
 	public List<Activity> getActivities(String date) {
-		return activityRepository.getActivities(date);
+		return repository.getActivities(date);
 	}
 }

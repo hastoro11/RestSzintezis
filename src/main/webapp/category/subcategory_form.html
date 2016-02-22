@@ -1,21 +1,23 @@
-<form class="col-sm-offset-2 col-sm-6">
+<form class="col-sm-offset-2 col-sm-6" name="subCatForm">
     <fieldset>
         <legend>Alkategória</legend>
         <span ng-init="items=['one','two','three']"></span>
 
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error':subCatForm.category.$invalid && subCatForm.category.$touched}">
             <label>Kategória</label>
-            <select class="form-control" ng-options="cat.id as cat.name for cat in categories"
-                    ng-model="subcategory.catId">
+            <select class="form-control" ng-options="cat.id as cat.name for cat in categories" name="category"
+                    ng-model="subcategory.catId" ng-required="true">
                 <option value=""> -- Válassz --</option>
             </select>
+            <span class="help-block" ng-if="subCatForm.category.$invalid && subCatForm.category.$touched">Válasszon egy kategóriát</span>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error':subCatForm.name.$invalid && subCatForm.name.$touched}">
             <label>Megnevezés</label>
-            <input type="text" class="form-control" ng-model="subcategory.name">
+            <input type="text" class="form-control" ng-model="subcategory.name" name="name" ng-required="true">
+            <span class="help-block" ng-if="subCatForm.name.$invalid && subCatForm.name.$touched">A név mező nem maradhat üresen</span>
         </div>
         <button class="btn btn-default" ng-click="cancel()">Mégsem</button>
-        <button class="btn btn-primary" ng-click="submit()">Mentés</button>
+        <button class="btn btn-primary" ng-click="submit()" ng-disabled="subCatForm.$invalid">Mentés</button>
         <button class="btn btn-danger" ng-click="delete(subcategory.id)" ng-show="edit">Töröl</button>
 
     </fieldset>

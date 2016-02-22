@@ -66,6 +66,23 @@ angular.module('myApp')
     //Edit
     .controller('ActivityEditCtrl', function ($scope, $routeParams, $location, CategorySrvc, ActivitySrvc) {
         $scope.activity = {};
+        function checkTime() {
+            if ($scope.activity.endTime <= $scope.activity.startTime) {
+                $scope.activityForm.end.$setValidity('late', false);
+                $scope.activityForm.start.$setValidity('late', false);
+            } else {
+                $scope.activityForm.end.$setValidity('late', true);
+                $scope.activityForm.start.$setValidity('late', true);
+            }
+        }
+
+        $scope.$watch('activity.startTime', function () {
+            checkTime();
+        })
+
+        $scope.$watch('activity.endTime', function () {
+            checkTime();
+        })
 
         if ($routeParams.id) {
             //edit
@@ -79,9 +96,10 @@ angular.module('myApp')
                 $scope.subcategories = data;
             })
 
+
         //submit
         $scope.submit = function () {
-            console.log($scope.activity);
+
             var activity = angular.copy($scope.activity);
             var date = new Date(activity.date);
             var start = new Date(activity.startTime);
@@ -91,18 +109,25 @@ angular.module('myApp')
             activity.startTime = start.getHours() + ':' + start.getMinutes();
             activity.endTime = end.getHours() + ':' + end.getMinutes();
 
-            console.log(activity);
-
             if (activity.id == 0) {
-                ActivitySrvc.addNewActivity(activity)
-                    .success(function (data) {
-                        toastr.success('A rögzítés sikerült', {timeOut: 1000});
-                        console.log(data);
-                        $location.path('/home');
-                    })
 
+                ActivitySrvc.addNewActivity(activity)
+                    .then(function (data) {
+                        toastr.success('A rögzítés sikerült', {timeOut: 1000});
+                        $location.path('/home');
+                    }, function (response) {
+                        if (response.status === 422) {
+                            toastr.error('Ez a tevékenység átfedésben van egy korábbival. Kérlek, módosítsd!', {timeOut: 1000});
+                        }
+                    });
             }
         }
+
+        //cancel
+        $scope.cancel = function () {
+            $location.path('/home');
+        }
+
         //Datepicker
         $scope.popup = {opened: false};
 
