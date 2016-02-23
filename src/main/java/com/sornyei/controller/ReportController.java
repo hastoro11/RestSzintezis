@@ -3,6 +3,7 @@ package com.sornyei.controller;
 import com.sornyei.model.Activity;
 import com.sornyei.model.Category;
 import com.sornyei.service.ReportService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 public class ReportController {
 
+	final static Logger logger = Logger.getLogger(ReportController.class.getName().toUpperCase());
 	@Autowired
 	private ReportService service;
 
@@ -27,6 +29,7 @@ public class ReportController {
 
 	@RequestMapping(value = "/report/{date}", method = RequestMethod.GET)
 	public List<Category> findByDate(@PathVariable("date") String date) {
+		logger.info(date);
 		return service.findByDate(date);
 	}
 

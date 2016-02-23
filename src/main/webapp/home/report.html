@@ -39,6 +39,7 @@
             </div>
         </div>
         <hr>
-        <h5>Az össze feljegyzett idő: {{totalTime / 60 -0.5 | number:0}} óra {{totalTime % 60}} perc / {{totalTime/60 | number:2}} óra</h5>
+        <h5 ng-show="totalTime">Az összes feljegyzett idő: {{totalTime / 60 -0.5 | number:0}} óra {{totalTime % 60}} perc / {{totalTime/60 | number:2}} óra</h5>
     </div>
+    <div ng-hide="totalTime">Erra a napra nem készült feljegyzés</div>
 </div>

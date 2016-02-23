@@ -40,6 +40,8 @@ public class ReportService {
 	}
 
 	public List<Category> findByDate(String date) {
+		date = date.replace('-', '.');
+		date += '.';
 		List<Category> rootCategories = categoryRepository.getRootCategories();
 		for (Category rootCategory : rootCategories) {
 			rootCategory.setSubCategories(categoryRepository.getSubCategories(rootCategory.getId()));
@@ -49,7 +51,9 @@ public class ReportService {
 				List<Activity> result = new ArrayList<>();
 				List<Activity> allActivities = activityRepository.findByCategoryId(subCategory.getId());
 				for (Activity activity : allActivities) {
-					if (activity.getStartTime().indexOf(date) > -1) {
+					String actDate = activity.getStartTime().split(" ")[0];
+					logger.info(date + ":" + actDate);
+					if (actDate.equals(date)) {
 						result.add(activity);
 					}
 				}

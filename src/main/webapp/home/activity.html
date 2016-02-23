@@ -2,40 +2,66 @@
     <form name="activityForm" novalidate>
         <h2>Új tevékenység</h2>
 
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm"
+             ng-class="{'has-error':activityForm.category.$invalid && activityForm.category.$touched}">
             <label>Kategória</label>
-            <select class="form-control" ng-model="activity.categoryId"
+            <select class="form-control" ng-model="activity.categoryId" name="category"
                     ng-options="category.id as category.name for category in categories"
                     ng-required="true">
                 <option value="">-- Válassz --</option>
             </select>
+
+            <div class="help-block" ng-show="activityForm.category.$invalid && activityForm.category.$touched">Válasszon
+                egy kategóriát
+            </div>
         </div>
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm"
+             ng-class="{'has-error':activityForm.name.$invalid && activityForm.name.$touched}">
             <label>Megnevezés</label>
-            <input type="text" class="form-control" ng-model="activity.name" ng-required="true">
+            <input type="text" class="form-control" ng-model="activity.name" ng-required="true" name="name">
+
+            <div class="help-block" ng-show="activityForm.name.$invalid && activityForm.name.$touched">Ez a mező nem
+                maradhat üresen
+            </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error':activityForm.date.$invalid && activityForm.date.$touched}">
             <label>Dátum</label>
 
             <p class="input-group col-sm-6">
-                <input type="text" class="form-control" uib-datepicker-popup ng-model="activity.date"
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="activity.date" name="date"
                        is-open="opened" ng-required="true"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open()"><i
                         class="glyphicon glyphicon-calendar"></i></button>
               </span>
             </p>
+            <div class="help-block" ng-show="activityForm.date.$invalid && activityForm.date.$touched">Válasszon egy
+                dátumot
+            </div>
         </div>
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm"
+             ng-class="{'has-error':activityForm.start.$invalid && activityForm.start.$dirty}">
             <label>Kezdési idő</label>
-            <uib-timepicker ng-model="activity.startTime" ng-change="changed()"
+            <uib-timepicker ng-model="activity.startTime" ng-change="changed()" name="start" ng-required="true"
                             show-meridian="false"></uib-timepicker>
+            <div class="help-block" ng-show="activityForm.start.$error.required && activityForm.start.$dirty">Válasszon egy
+                kezdési időpontot
+            </div>
         </div>
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm"
+             ng-class="{'has-error':activityForm.end.$invalid && activityForm.end.$dirty}">
             <label>Befejezési idő</label>
-            <uib-timepicker ng-model="activity.endTime" ng-change="changed()" show-meridian="false"></uib-timepicker>
+            <uib-timepicker ng-model="activity.endTime" ng-change="changed()" name="end" ng-required="true"
+                            show-meridian="false"></uib-timepicker>
+            <div class="help-block" ng-show="activityForm.end.$error.required && activityForm.end.$touched">Válasszon
+                egy
+                befejezési időpontot
+            </div>
+            <div class="help-block" ng-show="activityForm.end.$error.late && activityForm.end.$dirty">A két időpont
+                ellentmond egymásnak
+            </div>
         </div>
         <button class="btn btn-default" ng-click="cancel()">Mégsem</button>
-        <button class="btn btn-primary" ng-click="submit()">Mentés</button>
+        <button class="btn btn-primary" ng-click="submit()" ng-disabled="activityForm.$invalid">Mentés</button>
     </form>
 </div>

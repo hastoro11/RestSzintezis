@@ -5,7 +5,11 @@ angular.module('myApp')
     .controller('ActivityCtrl', function ($scope, $http, $location) {
 
 
-        $scope.activity = {date: new Date()};
+        $scope.activity = {
+            date: new Date(),
+            startTime: new Date(),
+            endTime: new Date()
+        };
 
         $http.get('/notrootcategories')
             .success(function (data) {
@@ -32,6 +36,18 @@ angular.module('myApp')
             $location.path('/home');
         }
 
+        //change
+        $scope.changed = function () {
+            console.log(new Date($scope.activity.endTime) <= new Date($scope.activity.startTime))
+            if (new Date($scope.activity.endTime) <= new Date($scope.activity.startTime)) {
+                $scope.activityForm.start.$setValidity('late', false);
+                $scope.activityForm.end.$setValidity('late', false);
+            }else{
+                $scope.activityForm.start.$setValidity('late', true);
+                $scope.activityForm.end.$setValidity('late', true);
+            }
+        }
+
         //Datepicker
         $scope.opened = false;
         $scope.open = function () {
@@ -42,7 +58,7 @@ angular.module('myApp')
             var day = new Date(date);
             var time = new Date(time);
             dateString = day.getFullYear() + '.' + ((day.getMonth() + 1) < 10 ? '0' + (day.getMonth() + 1) : (day.getMonth() + 1)) + '.' + day.getDate() + '. '
-            + time.getHours() + ':' + time.getMinutes();
+                + time.getHours() + ':' + time.getMinutes();
             console.log(dateString);
             return dateString;
         }
