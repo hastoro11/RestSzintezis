@@ -1,0 +1,44 @@
+<div class="col-sm-8 col-sm-offset-2">
+    <h1>Napi Tevékenységlista</h1>
+    <hr>
+    <div class="form-group">
+        <label>Válassz egy napot</label>
+
+        <p class="input-group col-sm-6">
+            <input type="text" class="form-control" uib-datepicker-popup ng-model="date"
+                   is-open="opened" ng-required="true"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open()"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+        </p>
+        <button class="btn btn-primary" ng-click="select()">Mehet</button>
+    </div>
+    <div ng-show="showReport">
+        <div ng-repeat="root in report" ng-show="root.totalDuration!=0">
+            <h4>{{root.name}} <span class="pull-right"> {{root.totalDuration / 60 -0.5 | number:0}} óra {{root.totalDuration % 60}} perc / {{root.totalDuration / 60 | number:2}} óra</span>
+            </h4>
+
+            <div ng-repeat="sub in root.subCategories" ng-show="sub.totalDuration!=0">
+                <h5>{{sub.name}} <span class="pull-right">{{sub.totalDuration / 60 -0.5 | number:0}} óra {{sub.totalDuration % 60}} perc / {{sub.totalDuration / 60 | number:2}} óra</span>
+                </h5>
+                <table class="table">
+                    <tr>
+                        <th>Megnevezés</th>
+                        <th>Kezdés</th>
+                        <th>Befejezés</th>
+                        <th>Időtartam</th>
+                    </tr>
+                    <tr ng-repeat="act in sub.activities">
+                        <td>{{act.name}}</td>
+                        <td>{{act.startTime}}</td>
+                        <td>{{act.endTime}}</td>
+                        <td>{{act.duration}} perc</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <h5>Az össze feljegyzett idő: {{totalTime / 60 -0.5 | number:0}} óra {{totalTime % 60}} perc / {{totalTime/60 | number:2}} óra</h5>
+    </div>
+</div>

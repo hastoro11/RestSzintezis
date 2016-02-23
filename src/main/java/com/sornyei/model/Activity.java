@@ -1,21 +1,24 @@
 package com.sornyei.model;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
+import org.joda.time.LocalDateTime;
 import org.joda.time.Minutes;
+import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.util.logging.Logger;
 
 /**
- * Created by gaborsornyei on 16. 02. 21..
+ * Created by gaborsornyei on 16. 02. 22..
  */
+@Component
 public class Activity {
+
+	final static Logger logger = Logger.getLogger(Activity.class.getName().toUpperCase());
+
 	private long id;
-	private String name;
-	private long subCatId;
-	private String date;
 	private String startTime;
 	private String endTime;
+	private String name;
+	private long categoryId;
 	private int duration;
 
 	public long getId() {
@@ -24,33 +27,6 @@ public class Activity {
 
 	public Activity setId(long id) {
 		this.id = id;
-		return this;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Activity setName(String name) {
-		this.name = name;
-		return this;
-	}
-
-	public long getSubCatId() {
-		return subCatId;
-	}
-
-	public Activity setSubCatId(long subCatId) {
-		this.subCatId = subCatId;
-		return this;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public Activity setDate(String date) {
-		this.date = date;
 		return this;
 	}
 
@@ -72,23 +48,44 @@ public class Activity {
 		return this;
 	}
 
-	public int getDuration() {
-		LocalTime start = new LocalTime(this.startTime);
-		LocalTime end = new LocalTime(this.endTime);
-
-		return Minutes.minutesBetween(start, end).getMinutes();
+	public String getName() {
+		return name;
 	}
 
-	@Override
-	public String toString() {
-		return "Activity{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", subCatId=" + subCatId +
-				", date='" + date + '\'' +
-				", startTime='" + startTime + '\'' +
-				", endTime='" + endTime + '\'' +
-				", duration=" + this.getDuration() +
-				'}';
+	public Activity setName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	public long getCategoryId() {
+		return categoryId;
+	}
+
+	public Activity setCategoryId(long categoryId) {
+		this.categoryId = categoryId;
+		return this;
+	}
+
+	public int getDuration() {
+		return Minutes.minutesBetween(stringToLocalDateTime(this.startTime), stringToLocalDateTime(this.endTime))
+				.getMinutes();
+	}
+
+	private LocalDateTime stringToLocalDateTime(String dateTimeString) {
+		String str[] = dateTimeString.split(" ");
+
+		String dateString = str[0];
+		String timeString = str[1];
+		String[] dateArray = dateString.split("\\.");
+
+		String[] timeArray = timeString.split(":");
+		LocalDateTime ldt = new LocalDateTime(
+				Integer.parseInt(dateArray[0]),
+				Integer.parseInt(dateArray[1]),
+				Integer.parseInt(dateArray[2]),
+				Integer.parseInt(timeArray[0]),
+				Integer.parseInt(timeArray[1])
+		);
+		return ldt;
 	}
 }

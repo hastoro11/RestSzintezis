@@ -11,7 +11,14 @@ angular.module('myApp', [
                 templateUrl: 'home/home.html',
                 controller: 'HomeCtrl'
             })
-
+            .when('/activity',{
+                templateUrl: 'home/activity.html',
+                controller: 'ActivityCtrl'
+            })
+            .when('/report', {
+                templateUrl: 'home/report.html',
+                controller: 'ReportCtrl'
+            })
             .otherwise({redirectTo: '/home'});
 
     }])
