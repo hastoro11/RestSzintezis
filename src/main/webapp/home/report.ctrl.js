@@ -4,7 +4,7 @@
 angular.module('myApp')
     .controller('ReportCtrl', function ($scope, $http) {
         $scope.showReport = false;
-        $scope.totalTime=true;
+        $scope.totalTime = true;
 
         //Datepicker
         $scope.date = new Date();

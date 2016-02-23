@@ -1,4 +1,4 @@
-<div class="col-sm-8 col-sm-offset-2">
+<div class="col-sm-8 col-sm-offset-2" id="report">
     <h1>Napi Tevékenységlista</h1>
     <hr>
     <div class="form-group">
@@ -15,7 +15,37 @@
         <button class="btn btn-primary" ng-click="select()">Mehet</button>
     </div>
     <div ng-show="showReport">
-        <div ng-repeat="root in report" ng-show="root.totalDuration!=0">
+
+        <table class="table">
+
+            <tr ng-repeat="root in report" ng-show="root.totalDuration!=0">
+                <td class="warning"><h4>{{root.name}}<small class="pull-right">{{root.totalDuration / 60 -0.5 | number:0}} óra {{root.totalDuration % 60}} perc / {{root.totalDuration / 60 | number:2}}</small></h4>
+                    <table class="table">
+                        <tr ng-repeat="sub in root.subCategories" ng-show="sub.totalDuration!=0">
+                            <td class="info"><h5>{{sub.name}} <small class="pull-right">{{sub.totalDuration / 60 -0.5 | number:0}} óra {{sub.totalDuration % 60}} perc/ {{root.totalDuration / 60 | number:2}} óra</small></h5>
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <th>Megnevezés</th>
+                                        <th>Kezdés</th>
+                                        <th>Befejezés</th>
+                                        <th>Időtartam</th>
+                                    </tr>
+                                    <tr ng-repeat="act in sub.activities">
+                                        <td>{{act.name}}</td>
+                                        <td>{{act.startTime.split(' ')[1]}}</td>
+                                        <td>{{act.endTime.split(' ')[1]}}</td>
+                                        <td>{{act.duration}} perc</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+
+<!--        <div ng-repeat="root in report" ng-show="root.totalDuration!=0">
             <h4>{{root.name}} <span class="pull-right"> {{root.totalDuration / 60 -0.5 | number:0}} óra {{root.totalDuration % 60}} perc / {{root.totalDuration / 60 | number:2}} óra</span>
             </h4>
 
@@ -37,9 +67,11 @@
                     </tr>
                 </table>
             </div>
-        </div>
+        </div>-->
         <hr>
-        <h5 ng-show="totalTime">Az összes feljegyzett idő: {{totalTime / 60 -0.5 | number:0}} óra {{totalTime % 60}} perc / {{totalTime/60 | number:2}} óra</h5>
+        <div class="well" ng-show="totalTime">Az összes feljegyzett idő: {{totalTime / 60 -0.5 | number:0}} óra {{totalTime % 60}}
+            perc / {{totalTime/60 | number:2}} óra</div>
+
     </div>
-    <div ng-hide="totalTime">Erra a napra nem készült feljegyzés</div>
+    <div class="well" ng-hide="totalTime">Erra a napra nem készült feljegyzés</div>
 </div>

@@ -4,6 +4,8 @@ import com.sornyei.model.Activity;
 import com.sornyei.service.ActivityService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +22,13 @@ public class ActivityController {
 	private ActivityService service;
 
 	@RequestMapping(value = "/activities", method = RequestMethod.POST)
-	public Activity create(@RequestBody Activity activity) {
-		logger.info("In create ...");
-		return service.create(activity);
+	public ResponseEntity<Activity> create(@RequestBody Activity activity) {
+		Activity act = service.create(activity);
+		if (act.getId() == 0) {
+			return new ResponseEntity<Activity>(HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+
+		return new ResponseEntity<Activity>(act, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/activities", method = RequestMethod.GET)
