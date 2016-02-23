@@ -3,7 +3,8 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
     'ngRoute',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'myApp.category'
 ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider
@@ -11,7 +12,7 @@ angular.module('myApp', [
                 templateUrl: 'home/home.html',
                 controller: 'HomeCtrl'
             })
-            .when('/activity',{
+            .when('/activity', {
                 templateUrl: 'home/activity.html',
                 controller: 'ActivityCtrl'
             })

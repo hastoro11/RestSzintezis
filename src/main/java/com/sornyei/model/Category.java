@@ -15,6 +15,7 @@ public class Category {
 	private List<Category> subCategories;
 	private List<Activity> activities;
 	private int totalDuration;
+	private long parentId;
 
 	public long getId() {
 		return id;
@@ -49,6 +50,15 @@ public class Category {
 
 	public Category setActivities(List<Activity> activities) {
 		this.activities = activities;
+		return this;
+	}
+
+	public long getParentId() {
+		return parentId;
+	}
+
+	public Category setParentId(long parentId) {
+		this.parentId = parentId;
 		return this;
 	}
 

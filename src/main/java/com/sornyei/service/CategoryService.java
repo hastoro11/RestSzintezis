@@ -15,7 +15,27 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-	public List<Category> getNotRootCategories(){
+	public List<Category> getNotRootCategories() {
 		return categoryRepository.getNotRootCategories();
+	}
+
+	public List<Category> getRootCategories(){
+		return categoryRepository.getRootCategories();
+	}
+
+	public List<Category> findAll() {
+		return categoryRepository.findAll();
+	}
+
+	public Category findById(long id) {
+		return categoryRepository.findById(id);
+	}
+
+	public Category update(Category category) {
+		return categoryRepository.update(category);
+	}
+
+	public Category create(Category category) {
+		return categoryRepository.create(category);
 	}
 }

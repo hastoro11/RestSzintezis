@@ -1,0 +1,20 @@
+<div class="col-sm-8 col-sm-offset-2" id="report">
+    <h1>Kategóriák</h1>
+    <button class="btn btn-primary" ng-click="newCategory()">Új kategória</button>
+    <hr>
+    <table class="table table-condensed">
+        <tr>
+            <th>#</th>
+            <th>Megnevezés</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="category in categories">
+            <td>{{category.id}}</td>
+            <td>{{category.name}}</td>
+            <td>
+                <button class="btn btn-link" ng-click="edit(category.id)">Szerkeszt</button>
+            </td>
+        </tr>
+    </table>
+
+</div>

@@ -1,0 +1,24 @@
+<div class="col-sm-6 col-sm-offset-1">
+    <form name="categoryForm" novalidate>
+        <h2>{{title}}</h2>
+
+        <div class="form-group form-group-sm">
+            <label>Kategória</label>
+            <select class="form-control" ng-model="category.parentId" name="parent"
+                    ng-options="category.id as category.name for category in categories">
+                <option value="">-- Válassz --</option>
+            </select>
+        </div>
+        <div class="form-group form-group-sm"
+             ng-class="{'has-error':categoryForm.name.$invalid && categoryForm.name.$touched}">
+            <label>Megnevezés</label>
+            <input type="text" class="form-control" ng-model="category.name" ng-required="true" name="name">
+
+            <div class="help-block" ng-show="categoryForm.name.$invalid && categoryForm.name.$touched">Ez a mező nem
+                maradhat üresen
+            </div>
+        </div>
+        <button class="btn btn-default" ng-click="cancel()">Mégsem</button>
+        <button class="btn btn-primary" ng-click="submit()" ng-disabled="categoryForm.$invalid">Mentés</button>
+    </form>
+</div>
